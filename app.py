@@ -137,20 +137,13 @@ class SensorDataCollector:
         return sensor_data
 
 
-def __main__():
+if __name__ == "__main__":
     mhz19 = Mhz19("MH_Z19")
     htu21d = Htu21d("HTU21D")
-
-    mhz19.measure()
-    print(mhz19.get_sensor_data())
-    htu21d.measure()
-    print(htu21d.get_sensor_data())
-
     data_collector = SensorDataCollector()
+
     data_collector.register(mhz19)
     data_collector.register(htu21d)
-
-    print(data_collector.get_sensor_data())
 
     filepath = "data.json"
     json_string = json.dumps(
