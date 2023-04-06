@@ -46,7 +46,7 @@ class Mhz19(Sensor):
 
 
 class Htu21d(Sensor):
-    # pi = pigpio.pi()
+    pi = pigpio.pi()
 
     # HTU21D-F Address
     addr = 0x40
