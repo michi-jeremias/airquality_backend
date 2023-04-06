@@ -34,11 +34,11 @@ class Sensor(metaclass=ABCMeta):
 class Mhz19(Sensor):
     def measure(self) -> None:
         sensor_data = []
-        # co2_value = float(mh_z19.read_all()["co2"])
-        co2_value = 567.0
+        co2_value = float(mh_z19.read_all()["co2"])
+        # co2_value = 567.0
         sensor_data.append(SensorData(self.name, "CO2", "ppm", co2_value))
-        # temperature_value = float(mh_z19.read_all()["temperature"])
-        temperature_value = 24.0
+        # temperature_value = 24.0
+        temperature_value = float(mh_z19.read_all()["temperature"])
         sensor_data.append(
             SensorData(self.name, "Temperature", " C", temperature_value)
         )
@@ -61,12 +61,14 @@ class Htu21d(Sensor):
     rdreg = 0xE7
     reset = 0xFE
 
+    @staticmethod
     def htu_reset(cls):
         handle = cls.pi.i2c_open(cls.bus, cls.addr)  # open i2c bus
         cls.pi.i2c_write_byte(handle, cls.reset)  # send reset command
         cls.pi.i2c_close(handle)  # close i2c bus
         time.sleep(0.2)  # reset takes 15ms so let's give it some time
 
+    @staticmethod
     def read_temperature(cls):
         handle = cls.pi.i2c_open(cls.bus, cls.addr)  # open i2c bus
         cls.pi.i2c_write_byte(handle, cls.rdtemp)  # send read temp command
@@ -84,6 +86,7 @@ class Htu21d(Sensor):
         ) - 46.85  # formula from datasheet
         return temperature
 
+    @staticmethod
     def read_humidity(cls):
         handle = cls.pi.i2c_open(cls.bus, cls.addr)  # open i2c bus
         cls.pi.i2c_write_byte(handle, cls.rdhumi)  # send read humi command
@@ -107,11 +110,11 @@ class Htu21d(Sensor):
 
     def measure(self) -> None:
         sensor_data = []
-        humidity_value = 0.0
+        humidity_value = self.read_humidity()
         sensor_data.append(SensorData(self.name, "Humidity", "%", humidity_value))
-        temperature_value = 0.0
+        temperature_value = self.read_temperature()
         sensor_data.append(
-            SensorData(self.name, "Temperature", "°C", temperature_value)
+            SensorData(self.name, "Temperature", " C", temperature_value)
         )
         self.sensor_data = sensor_data
 
