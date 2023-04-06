@@ -139,6 +139,11 @@ if __name__ == "__main__":
     htu21d = Htu21d("HTU21D")
     data_collector = SensorDataCollector()
 
+    mhz19.measure()
+    htu21d.measure()
+    print(mhz19.get_sensor_data())
+    print(htu21d.get_sensor_data())
+
     data_collector.register(mhz19)
     data_collector.register(htu21d)
 
