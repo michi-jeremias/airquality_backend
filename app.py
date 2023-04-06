@@ -101,7 +101,7 @@ class Htu21d(Sensor):
         )  # I'm an idiot and can't figure out any other way to make it a float
         uncomp_humidity = ((humi_reading / 65536) * 125) - 6  # formula from datasheet
         # to get the compensated humidity we need to read the temperature
-        temperature = cls.read_temperature()
+        temperature = cls.read_temperature(cls)
         humidity = ((25 - temperature) * -0.15) + uncomp_humidity
         return humidity
 
