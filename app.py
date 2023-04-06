@@ -7,9 +7,6 @@ import time
 import dataclasses
 import json
 
-mock_result = {"co2": 730, "temperature": 24, "TT": 64, "SS": 0, "UhUl": 32512}
-print(mock_result["co2"])
-
 from dataclasses import dataclass
 
 
