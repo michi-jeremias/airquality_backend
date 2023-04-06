@@ -40,7 +40,7 @@ class Mhz19(Sensor):
         # temperature_value = float(mh_z19.read_all()["temperature"])
         temperature_value = 24.0
         sensor_data.append(
-            SensorData(self.name, "Temperature", "°C", temperature_value)
+            SensorData(self.name, "Temperature", " C", temperature_value)
         )
         self.sensor_data = sensor_data
 
