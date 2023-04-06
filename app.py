@@ -151,5 +151,5 @@ if __name__ == "__main__":
     json_string = json.dumps(
         [sensordata.__dict__ for sensordata in data_collector.get_sensor_data()]
     )
-    with open(filepath, "w") as f:
+    with open(file=filepath, mode="w", encoding="utf-8") as f:
         f.write(json_string)
