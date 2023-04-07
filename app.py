@@ -25,5 +25,4 @@ def data(sid, data):
 
 if __name__ == "__main__":
     app = socketio.Middleware(sio, app)
-    app.run(host='0.0.0.0', debug=True, port=8080)
-    # eventlet.wsgi.server(eventlet.listen(("", 5000)), app)
+    eventlet.wsgi.server(eventlet.listen(("", 5000)), app)
