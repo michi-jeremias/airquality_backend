@@ -6,6 +6,7 @@ import pigpio
 import time
 import dataclasses
 import json
+import socketio
 
 from dataclasses import dataclass
 
@@ -150,9 +151,15 @@ if __name__ == "__main__":
     data_collector.register(mhz19)
     data_collector.register(htu21d)
 
-    filepath = "data.json"
-    json_string = json.dumps(
-        [sensordata.__dict__ for sensordata in data_collector.get_sensor_data()]
-    )
-    with open(file=filepath, mode="w", encoding="utf-8") as f:
-        f.write(json_string)
+    sio = socketio.Client()
+    sio.connect("http://localhost:5000")
+
+    while True:
+        data = json.dumps(
+            [sensordata.__dict__ for sensordata in data_collector.get_sensor_data()]
+        )
+        with open(file="data.json", mode="w", encoding="utf-8") as f:
+            f.write(data)
+
+        sio.emit("data", data)
+        time.sleep(30)
