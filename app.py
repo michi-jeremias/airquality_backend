@@ -1,6 +1,6 @@
 import eventlet
 import socketio
-from flask import Flask, render_template
+from flask import Flask
 
 sio = socketio.Server()
 app = Flask(__name__)
@@ -25,4 +25,5 @@ def data(sid, data):
 
 if __name__ == "__main__":
     app = socketio.Middleware(sio, app)
-    eventlet.wsgi.server(eventlet.listen(("", 5000)), app)
+    app.run(host='0.0.0.0', debug=True, port=8080)
+    # eventlet.wsgi.server(eventlet.listen(("", 5000)), app)
