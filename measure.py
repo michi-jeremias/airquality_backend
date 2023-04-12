@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import math
 from typing import List
+
 # import mh_z19
 # import pigpio
 import time
@@ -139,23 +140,29 @@ class SensorDataCollector:
             sensor_data.extend(sensor.get_sensor_data())
         return sensor_data
 
+
 sio = socketio.Client()
+
 
 @sio.on("my message")
 def on_message(data):
     print("client received a message")
 
-@sio.on('*')
+
+@sio.on("*")
 def catch_all(event, data):
     pass
+
 
 @sio.event
 def connect():
     print("Connection established.")
 
+
 @sio.event
 def connect_error(data):
     print("Could not establish connection.")
+
 
 @sio.event
 def disconnect():
@@ -185,6 +192,7 @@ if __name__ == "__main__":
         data = json.dumps(
             [sensordata.__dict__ for sensordata in data_collector.get_sensor_data()]
         )
+        print(data)
         # with open(file="data.json", mode="w", encoding="utf-8") as f:
         #     f.write(data)
 
