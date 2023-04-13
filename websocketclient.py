@@ -1,5 +1,5 @@
 import asyncio
-import time
+import json
 import socketio
 
 loop = asyncio.get_event_loop()
@@ -7,32 +7,17 @@ sio = socketio.AsyncClient()
 start_timer = None
 
 
-# async def send_ping():
-#     global start_timer
-#     start_timer = time.time()
-#     await sio.emit("ping_from_client")
+class SensorData(dict):
+    def __init__(self, name, subject, unit, value):
+        dict.__init__(self, name=name, subject=subject, unit=unit, value=value)
+
+    def encode(self):
+        return self.__dict__
 
 
 @sio.event
 async def connect():
-    print("connected to server")
-    # await send_message("first message hiho")
     await send_data()
-
-
-# @sio.event
-# async def send_message(message: str):
-#     print(f"emitting message: {message}")
-#     await sio.emit("message", message)
-
-
-# @sio.event
-# async def request_message(time: str):
-#     message: str = "triggered message"
-#     print(f"trigger new message: {message}: {time}")
-#     await sio.sleep(1)
-#     if sio.connected:
-#         await send_message(message)
 
 
 @sio.event
@@ -49,25 +34,39 @@ async def message(message: str):
 
 
 async def send_data():
+    json_object = [
+        {"name": "MH_Z19", "subject": "CO2", "unit": "ppm", "value": 567.0},
+        {
+            "name": "MH_Z19",
+            "subject": "Temperature",
+            "unit": " C",
+            "value": 24.0,
+        },
+        {"name": "MH_Z19", "subject": "Temperature", "unit": " C", "value": 24.0},
+        {
+            "name": "HTU21D",
+            "subject": "Temperature",
+            "unit": " C",
+            "value": 24.0,
+        },
+        {"name": "HTU21D", "subject": "Humidity", "unit": "%", "value": 38.0},
+    ]
+
+    json_data = [
+        SensorData("MH_Z19", "CO2", "ppm", 567.0),
+        SensorData("MH_Z19", "Temperature", " C", 24.0),
+    ]
+    jjson = json.dumps(json_data, default=lambda o: o.encode())  # .replace('"', "'")
     while True:
-        await sio.emit("on_data", {"foo": "bar"})
+        # await sio.emit("on_data", {"foo": "baraaaa", "huhu": "huaha"})
+        await sio.emit("on_data", jjson)
         await sio.sleep(4)
 
 
-# @sio.event
-# async def pong_from_server():
-#     global start_timer
-#     latency = time.time() - start_timer
-#     print("latency is {0:.2f} ms".format(latency * 1000))
-#     await sio.sleep(1)
-#     if sio.connected:
-#         await send_ping()
-
-
-async def start_server():
+async def start_client():
     await sio.connect("ws://localhost:5000", wait_timeout=10)
     await sio.wait()
 
 
 if __name__ == "__main__":
-    loop.run_until_complete(start_server())
+    loop.run_until_complete(start_client())

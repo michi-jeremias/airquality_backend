@@ -26,6 +26,13 @@ async def message(message: str):
     # await sio.emit("request_message", time.time())
 
 
+@sio.event
+async def on_data(data):
+    # print(f"from: {sid}")
+    print(f"data: {data}")
+    await sio.emit("message", f"received at: {time.time()}")
+
+
 async def start_server():
     await sio.connect("ws://localhost:5000", wait_timeout=10)
     await sio.wait()

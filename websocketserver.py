@@ -39,15 +39,10 @@ async def message(sid, message: str):
 async def on_data(sid, data):
     print(f"from: {sid}")
     print(f"data: {data}")
+    await sio.emit("on_data", data)
     await sio.emit("message", f"received at: {time.time()}")
+    await sio.emit("message2", f"msg 2 received at: {time.time()}")
 
-
-# json_object = [
-#     {"name": "MH_Z19", "subject": "CO2", "unit": "ppm", "value": 567.0},
-#     {"name": "MH_Z19", "subject": "Temperature", "unit": " C", "value": 24.0},
-#     {"name": "HTU21D", "subject": "Humidity", "unit": "%", "value": 38.0},
-#     {"name": "HTU21D", "subject": "Temperature", "unit": " C", "value": 24.0},
-# ]
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=5000)
