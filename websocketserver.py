@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import uvicorn
 import time
+from datetime import datetime
 import socketio
 import asyncio
 
@@ -31,11 +32,11 @@ async def message(sid, message: str):
 
 @sio.event
 async def on_data(sid, data):
+    now = datetime.now()
     print(f"from: {sid}")
     print(f"data: {data}")
     await sio.emit("on_data", data)
-    await sio.emit("message", f"received at: {time.time()}")
-    await sio.emit("message2", f"msg 2 received at: {time.time()}")
+    await sio.emit("message", f"{now:%H:%M:%S}")
 
 
 if __name__ == "__main__":
