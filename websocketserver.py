@@ -24,12 +24,6 @@ async def disconnect(sid):
     print(f"Disconnected: {sid}")
 
 
-# @sio.event
-# async def datarequest_from_frontend(sid):
-#     print("Data received from frontend")
-#     await sio.emit("getSensorData")
-
-
 @sio.event
 async def message(sid, message: str):
     print(f"message from {sid}: {message}")
@@ -46,7 +40,3 @@ async def on_data(sid, data):
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=5000)
-
-    # while True:
-    #     sensordata()
-    #     asyncio.sleep(2)

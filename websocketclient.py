@@ -58,7 +58,6 @@ async def send_data():
     ]
     jjson = json.dumps(json_data, default=lambda o: o.encode())  # .replace('"', "'")
     while True:
-        # await sio.emit("on_data", {"foo": "baraaaa", "huhu": "huaha"})
         await sio.emit("on_data", jjson)
         await sio.sleep(4)
 
