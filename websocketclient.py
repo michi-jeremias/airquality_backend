@@ -11,13 +11,13 @@ sio = socketio.AsyncClient()
 
 @sio.event
 async def connect() -> None:
+    print(f"Connected with id: {sio.sid}")
     await measure_and_send()
 
 
 @sio.event
 async def message(message: str) -> None:
-    print(f"websocketclient: {sio.sid}")
-    print(f"message from server: {message}")
+    print(f"{message}")
 
 
 async def measure_and_send() -> None:
@@ -29,7 +29,7 @@ async def measure_and_send() -> None:
     while True:
         datastation.measure()
         await sio.emit("on_data", datastation.get_data_json())
-        await sio.sleep(4)
+        await sio.sleep(5)
 
 
 async def start_client() -> None:

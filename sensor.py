@@ -48,4 +48,5 @@ class SensorDataCollector:
 
     def get_data_json(self) -> str:
         # returns a JSON string
-        return json.dumps(self.get_sensor_data(), default=lambda o: o.encode())
+        data_json = json.dumps(self.get_sensor_data(), default=lambda o: o.encode())
+        return data_json

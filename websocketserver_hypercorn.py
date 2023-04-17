@@ -19,27 +19,26 @@ config.bind = ["localhost:5000"]
 
 
 @sio.event
-async def connect(sid, environ, auth):
+async def connect(sid: str, environ, auth) -> None:
     print(f"Connected: {sid}")
 
 
 @sio.event
-async def disconnect(sid):
+async def disconnect(sid: str) -> None:
     print(f"Disconnected: {sid}")
 
 
 @sio.event
-async def message(sid, message: str):
-    print(f"message from {sid}: {message}")
+async def message(message: str) -> None:
+    print(f"{message}")
 
 
 @sio.event
-async def on_data(sid, data):
+async def on_data(sid: str, data: str) -> None:
     now = datetime.now()
-    print(f"from: {sid}")
-    print(f"data: {data}")
-    # await sio.emit("on_data", (sid, data))
-    await sio.emit("message", f"{now:%H:%M:%S}")
+    print(f"Message from: {sid}")
+    await sio.emit("on_data", data)
+    await sio.emit("message", f"Message received: {now:%H:%M:%S}")
 
 
 if __name__ == "__main__":
