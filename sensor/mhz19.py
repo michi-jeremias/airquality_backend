@@ -1,5 +1,5 @@
+from sensor.sensor import Sensor, SensorData
 import mh_z19
-from mocksensors import Sensor, SensorData
 
 
 class Mhz19(Sensor):

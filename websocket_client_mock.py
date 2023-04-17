@@ -1,8 +1,8 @@
 import asyncio
 import socketio
 
-import mocksensors
-from sensor import SensorDataCollector
+from sensor.mock import Mock1, Mock2
+from sensor.sensor import SensorStation
 
 
 loop = asyncio.get_event_loop()
@@ -21,9 +21,9 @@ async def message(message: str) -> None:
 
 
 async def measure_and_send() -> None:
-    datastation = SensorDataCollector()
-    datastation.register(mocksensors.Mock1("Mock CO2 Temp"))
-    datastation.register(mocksensors.Mock2("Mock Temp Hum"))
+    datastation = SensorStation()
+    datastation.register(Mock1("Mock1"))
+    datastation.register(Mock2("Mock2"))
 
     while True:
         datastation.measure()

@@ -1,4 +1,4 @@
-from sensor import Sensor, SensorData
+from sensor.sensor import Sensor, SensorData
 import random
 
 

@@ -6,13 +6,7 @@ from datetime import datetime
 import socketio
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
-app = socketio.ASGIApp(
-    sio,
-    static_files={
-        "/": "latency.html",
-        "/static": "static",
-    },
-)
+app = socketio.ASGIApp(sio)
 
 config = Config()
 config.bind = ["localhost:5000"]
@@ -20,7 +14,7 @@ config.bind = ["localhost:5000"]
 
 @sio.event
 async def connect(sid: str, environ, auth) -> None:
-    print(f"Connected: {sid}")
+    print(f"Connected: sid: {sid}")
 
 
 @sio.event

@@ -29,7 +29,7 @@ class Sensor(metaclass=ABCMeta):
         pass
 
 
-class SensorDataCollector:
+class SensorStation:
     def __init__(self) -> None:
         self.sensors: List[Sensor] = []
 
