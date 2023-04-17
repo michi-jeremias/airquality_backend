@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 import uvicorn
-import time
 from datetime import datetime
 import socketio
-import asyncio
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 app = socketio.ASGIApp(
