@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import asyncio
+from python_json_config import ConfigBuilder
 from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from datetime import datetime
@@ -7,9 +8,6 @@ import socketio
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 app = socketio.ASGIApp(sio)
-
-config = Config()
-config.bind = ["localhost:5000"]
 
 
 @sio.event
@@ -36,4 +34,11 @@ async def on_data(sid: str, data: str) -> None:
 
 
 if __name__ == "__main__":
+    config = Config()
+    builder = ConfigBuilder()
+    json_config = builder.parse_config("config.json")
+    host = json_config.server.host
+    port = json_config.server.port
+    config.bind = [f"{host}:{port}"]
+
     asyncio.run(serve(app, config))

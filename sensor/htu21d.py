@@ -71,8 +71,9 @@ class Htu21d(Sensor):
         sensor_data = []
         humidity_value = self.read_humidity(self)
         sensor_data.append(SensorData(self.name, "Humidity", "%", humidity_value))
-        temperature_value = self.read_temperature(self)
-        sensor_data.append(
-            SensorData(self.name, "Temperature", " C", temperature_value)
-        )
+        # I'll be using the temperature from mhz19
+        # temperature_value = self.read_temperature(self)
+        # sensor_data.append(
+        #     SensorData(self.name, "Temperature", "°C", temperature_value)
+        # )
         self.sensor_data = sensor_data
