@@ -7,28 +7,19 @@ sio = socketio.AsyncClient()
 start_timer = None
 
 
-# async def send_ping():
-#     global start_timer
-#     start_timer = time.time()
-#     await sio.emit("ping_from_client")
-
-
 @sio.event
 async def connect():
     print("connected to server")
-    # await send_message("first message hiho")
 
 
 @sio.event
 async def message(message: str):
     print(f"websocketclient: {sio.sid}")
     print(f"message from server: {message}")
-    # await sio.emit("request_message", time.time())
 
 
 @sio.event
 async def on_data(data):
-    # print(f"from: {sid}")
     print(f"data: {data}")
     await sio.emit("message", f"received at: {time.time()}")
 
