@@ -1,22 +1,17 @@
 import asyncio
-import json
 import socketio
+
+import mocksensors
+from sensor import SensorDataCollector
+
 
 loop = asyncio.get_event_loop()
 sio = socketio.AsyncClient()
 
 
-class SensorData(dict):
-    def __init__(self, name: str, subject: str, unit: str, value: float) -> None:
-        dict.__init__(self, name=name, subject=subject, unit=unit, value=value)
-
-    def encode(self) -> dict:
-        return self.__dict__
-
-
 @sio.event
 async def connect() -> None:
-    await send_data()
+    await measure_and_send()
 
 
 @sio.event
@@ -31,14 +26,14 @@ async def message(message: str) -> None:
     print(f"message from server: {message}")
 
 
-async def send_data() -> None:
-    sensor_data = [
-        SensorData("MH_Z19", "CO2", "ppm", 500.0),
-        SensorData("MH_Z19", "Temperature", " C", 20.0),
-    ]
-    sensor_data_json = json.dumps(sensor_data, default=lambda o: o.encode())
+async def measure_and_send() -> None:
+    datastation = SensorDataCollector()
+    datastation.register(mocksensors.Mock1("Mock CO2 Temp"))
+    datastation.register(mocksensors.Mock2("Mock Temp Hum"))
+
     while True:
-        await sio.emit("on_data", sensor_data_json)
+        datastation.measure()
+        await sio.emit("on_data", datastation.get_data_json())
         await sio.sleep(4)
 
 
