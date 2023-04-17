@@ -9,7 +9,7 @@ class Mock1(Sensor):
             SensorData(self.name, "CO2", "ppm", random.uniform(400.0, 1200.0))
         )
         sensor_data.append(
-            SensorData(self.name, "Temperature", " C", random.uniform(22.0, 24.0))
+            SensorData(self.name, "Temperature", "°C", random.uniform(22.0, 24.0))
         )
         self.sensor_data = sensor_data
 
@@ -21,6 +21,6 @@ class Mock2(Sensor):
             SensorData(self.name, "Humidity", "%", random.uniform(30.0, 60.0))
         )
         sensor_data.append(
-            SensorData(self.name, "Temperature", " C", random.uniform(22.0, 24.5))
+            SensorData(self.name, "Temperature", "°C", random.uniform(22.0, 24.5))
         )
         self.sensor_data = sensor_data

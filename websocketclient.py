@@ -23,7 +23,6 @@ async def message(message: str) -> None:
 async def measure_and_send() -> None:
     datastation = SensorDataCollector()
     datastation.register(mocksensors.Mock1("Mock CO2 Temp"))
-    datastation.register(mocksensors.Mock1("Mock2 CO2 Temp"))
     datastation.register(mocksensors.Mock2("Mock Temp Hum"))
 
     while True:
