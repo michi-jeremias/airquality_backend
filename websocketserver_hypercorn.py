@@ -38,7 +38,7 @@ async def on_data(sid, data):
     now = datetime.now()
     print(f"from: {sid}")
     print(f"data: {data}")
-    await sio.emit("on_data", data)
+    # await sio.emit("on_data", (sid, data))
     await sio.emit("message", f"{now:%H:%M:%S}")
 
 

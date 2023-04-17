@@ -15,12 +15,6 @@ async def connect() -> None:
 
 
 @sio.event
-async def on_data(sid: str, data: str) -> None:
-    print(f"from: {sid}")
-    print(f"data: {data}")
-
-
-@sio.event
 async def message(message: str) -> None:
     print(f"websocketclient: {sio.sid}")
     print(f"message from server: {message}")
