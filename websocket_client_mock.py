@@ -39,7 +39,6 @@ async def start_client() -> None:
     host = json_config.server.host
     port = json_config.server.port
     await sio.connect(f"ws://{host}:{port}", wait_timeout=10)
-    # await sio.connect("ws://localhost:5000", wait_timeout=10)
     await sio.wait()
 
 
