@@ -39,7 +39,10 @@ async def start_client() -> None:
     host = json_config.server.host
     port = json_config.server.port
     await sio.connect(f"ws://{host}:{port}", wait_timeout=10)
-    await sio.wait()
+    try:
+        await sio.wait()
+    except asyncio.exceptions.CancelledError:
+        print("User cancelled action.")
 
 
 if __name__ == "__main__":
