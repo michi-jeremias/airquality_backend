@@ -42,6 +42,7 @@ if __name__ == "__main__":
     builder = ConfigBuilder()
     json_config = builder.parse_config("config.json")
     host = json_config.server.host
+    host = "0.0.0.0"
     port = json_config.server.port
     config.bind = [f"{host}:{port}"]
 
