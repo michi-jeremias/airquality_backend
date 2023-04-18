@@ -38,12 +38,8 @@ async def on_data(sid: str, data: str) -> None:
 
 
 if __name__ == "__main__":
-    try:
-        config = Config()
-        builder = ConfigBuilder()
-        json_config = builder.parse_config("config.json")
-        config.bind = [f"0.0.0.0:5000"]
-        asyncio.run(serve(app, config))
-
-    except KeyboardInterrupt:
-        print("Shutting down server.")
+    config = Config()
+    builder = ConfigBuilder()
+    json_config = builder.parse_config("config.json")
+    config.bind = [f"0.0.0.0:5000"]
+    asyncio.run(serve(app, config))
