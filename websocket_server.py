@@ -5,6 +5,10 @@ from hypercorn.asyncio import serve
 from hypercorn.config import Config
 from datetime import datetime
 import socketio
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
 
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 app = socketio.ASGIApp(sio)
