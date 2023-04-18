@@ -43,4 +43,8 @@ async def start_client() -> None:
 
 
 if __name__ == "__main__":
-    loop.run_until_complete(start_client())
+    try:
+        loop.run_until_complete(start_client())
+
+    except KeyboardInterrupt:
+        print("Shutting down client.")
