@@ -1,6 +1,8 @@
 import asyncio
 import socketio
 
+from python_json_config import ConfigBuilder
+
 from sensor.htu21d import Htu21d
 from sensor.mhz19 import Mhz19
 from sensor.sensor import SensorStation
@@ -28,11 +30,15 @@ async def measure_and_send() -> None:
     while True:
         sensorstation.measure()
         await sio.emit("on_data", sensorstation.get_data_json())
-        await sio.sleep(5)
+        await sio.sleep(10)
 
 
 async def start_client() -> None:
-    await sio.connect("ws://localhost:5000", wait_timeout=10)
+    builder = ConfigBuilder()
+    json_config = builder.parse_config("config.json")
+    host = json_config.server.host
+    port = json_config.server.port
+    await sio.connect(f"ws://{host}:{port}", wait_timeout=10)
     await sio.wait()
 
 
