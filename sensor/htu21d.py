@@ -48,7 +48,17 @@ class Htu21d(Sensor):
     @staticmethod
     def read_humidity(cls):
         handle = cls.pi.i2c_open(cls.bus, cls.addr)  # open i2c bus
-        cls.pi.i2c_write_byte(handle, cls.rdhumi)  # send read humi command
+        for _ in range(5):
+            try:
+                cls.pi.i2c_write_byte(handle, cls.rdhumi)  # send read humi command
+                success = True
+                break
+            except pigpio.error as e:
+                print(f"pigpio error: {e}")
+                time.sleep(1)
+        if not success:
+            "Failed i2c.write_byte() 5 times"
+
         time.sleep(0.055)  # readings take up to 50ms, lets give it some time
         (count, byteArray) = cls.pi.i2c_read_device(handle, 3)  # vacuum up those bytes
         cls.pi.i2c_close(handle)  # close the i2c bus
