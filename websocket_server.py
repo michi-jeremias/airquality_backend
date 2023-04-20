@@ -34,7 +34,7 @@ async def on_data(sid: str, data: str) -> None:
     now = datetime.now()
     print(f"Message from: {sid}")
     await sio.emit("on_data", data)
-    await sio.emit("message", f"Message received: {now:%H:%M:%S}")
+    await sio.emit("message", f"Last update: {now:%H:%M:%S}")
 
 
 if __name__ == "__main__":
