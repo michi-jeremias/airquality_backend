@@ -42,4 +42,5 @@ if __name__ == "__main__":
     builder = ConfigBuilder()
     json_config = builder.parse_config("config.json")
     config.bind = [f"0.0.0.0:5000"]
+    # config.bind = [f"192.168.100.12:6000"]
     asyncio.run(serve(app, config))
