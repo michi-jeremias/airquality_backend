@@ -30,4 +30,5 @@ if __name__ == "__main__":
     sensorstation = SensorStation()
     sensorstation.register(Htu21d("HTU21d"))
     sensorstation.register(Mhz19("MHZ19"))
-    app.run(host="192.168.100.12", port=5000, debug=True)
+    # app.run(host="192.168.100.12", port=5000, debug=True)
+    app.run(host="raspberrypi", port=5000, debug=True)
