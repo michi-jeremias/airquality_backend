@@ -1,7 +1,7 @@
 import math
 import time
 import pigpio
-from sensor.sensor import Sensor, SensorData
+from sensor.sensorstation import Sensor, SensorData
 
 
 class Htu21d(Sensor):

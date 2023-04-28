@@ -1,4 +1,4 @@
-from sensor.sensor import Sensor, SensorData
+from sensor.sensorstation import Sensor, SensorData
 import mh_z19
 
 
