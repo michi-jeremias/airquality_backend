@@ -3,7 +3,6 @@ import time
 import pigpio
 from sensor.sensorstation import Sensor, SensorData
 
-
 class Htu21d(Sensor):
     pi = pigpio.pi()
 
